@@ -1,17 +1,103 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
-import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
-import 'ag-grid-community/styles/ag-theme-material.css'; // Optional theme CSS
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-material.css';
 
-//import Button from'@mui/material/Button';
+import Button from '@mui/material/Button';
+
+import AddCustomer from './AddCustomer';
 
 export default function CustomerApp() {
+    const customerAPI = 'https://customerrest.herokuapp.com/api/customers';
     const [error, setError] = useState('');
     const [customers, setCustomers] = useState([]);
     const gridRef = useRef();
 
+    useEffect(() => fetchData(), []);
+
+    const fetchData = () => {
+        fetch(customerAPI)
+        .then(response => {
+            console.log(response);
+            if (response.ok){
+                return response.json();
+            } else {
+                throw (new Error(response.statusText));
+            } 
+        })
+        .then(responseData => {
+            console.log(responseData.content);
+            setCustomers(responseData.content);
+        })
+        .catch(error => {
+            setError(`Try again (${error.message})`);
+            setCustomers(null);
+        });
+    }
+
+    // poista
+    //lisää viesti poiston onnistumisesta
+    const deleteCustomerFunc = (link) => {
+        console.log(link);
+        if(window.confirm('Are you sure?')) {
+            fetch(link, {method: 'DELETE'})
+            .then(res => fetchData())
+            .catch(err => console.error(err))
+        }
+    }
+
+    //uusi
+    const saveCustomer = (customer) => {
+        fetch(customerAPI, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(customer)
+        })
+        .then(res => fetchData())
+        .catch(err => console.error(err))
+    }
+
+    /*//päivitä
+    const updateCar = (car, link) => {
+        fetch(link, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(car)
+        })
+        .then(res => fetchData())
+        .catch(err => console.error(err))
+    }*/
+
+
     const columns = [
+        {
+            width: 100,
+            headerName: 'DEL FIELD',
+            field: 'links[1].href',
+/*
+            cellRenderer: row =>
+                <Button
+                    variant='outlined'
+                    color='error'
+                    size='small'
+                    onClick = {() => deleteCustomerFunc(row.value)}
+                >
+                    Delete
+                </Button>
+*/
+        },
+/*        {
+            width: 100,
+            headerName: '',
+            field: '',
+            cellRenderer: row => <EditCustomer updateCustomer={updateCustomer} customer={row.data}/>
+        },
+*/
         {
             headerName: 'First name',
             field: 'firstname',
@@ -63,28 +149,6 @@ export default function CustomerApp() {
         }
     ]
 
-    useEffect(() => fetchData(), []);
-
-    const fetchData = () => {
-        fetch('https://customerrest.herokuapp.com/api/customers')
-        .then(response => {
-            console.log(response);
-            if (response.ok){
-                return response.json();
-            } else {
-                throw (new Error(response.statusText));
-            } 
-        })
-        .then(responseData => {
-            console.log(responseData);
-            setCustomers(responseData.content);
-        })
-        .catch(error => {
-            setError(`Try again (${error.message})`);
-            setCustomers(null);
-        });
-    }
-
     return (
         <div
             className="ag-theme-material"
@@ -93,6 +157,7 @@ export default function CustomerApp() {
                     height: 700,
                     margin: 'auto'}}
         >
+            <AddCustomer saveCustomer={saveCustomer} />
             <AgGridReact
                 ref={gridRef}
                 onGridReady={
