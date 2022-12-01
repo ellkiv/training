@@ -5,8 +5,12 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 
 import Button from '@mui/material/Button';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 import AddCustomer from './AddCustomer';
+import EditCustomer from './EditCustomer';
+
+import AddTraining from './AddTraining';
 
 export default function CustomerApp() {
     const customerAPI = 'https://customerrest.herokuapp.com/api/customers';
@@ -27,12 +31,11 @@ export default function CustomerApp() {
             } 
         })
         .then(responseData => {
-            console.log(responseData.content);
             setCustomers(responseData.content);
         })
         .catch(error => {
-            setError(`Try again (${error.message})`);
-            setCustomers(null);
+            setError(`Error (${error.message})`);
+            //setCustomers(null);
         });
     }
 
@@ -47,7 +50,20 @@ export default function CustomerApp() {
         }
     }
 
-    //uusi
+    //päivitä
+    const updateCustomer = (customer, link) => {
+        fetch(link, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(customer)
+        })
+        .then(res => fetchData())
+        .catch(err => console.error(err))
+    }
+
+    //uusiAsiakas
     const saveCustomer = (customer) => {
         fetch(customerAPI, {
             method: 'POST',
@@ -60,47 +76,49 @@ export default function CustomerApp() {
         .catch(err => console.error(err))
     }
 
-    /*//päivitä
-    const updateCar = (car, link) => {
-        fetch(link, {
-            method: 'PUT',
+    //uusiTreeni
+    const saveTraining = (customer) => {
+        fetch('https://customerrest.herokuapp.com/gettrainings', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(car)
+            body: JSON.stringify(customer)
         })
         .then(res => fetchData())
         .catch(err => console.error(err))
-    }*/
-
+    }
 
     const columns = [
         {
-            width: 100,
-            headerName: 'DEL FIELD',
-            field: 'links[1].href',
-/*
+            width: 70,
+            headerName: '',
+            field: 'id',
             cellRenderer: row =>
                 <Button
-                    variant='outlined'
                     color='error'
-                    size='small'
-                    onClick = {() => deleteCustomerFunc(row.value)}
+                    endIcon={<DeleteForeverIcon />}
+                    onClick = {() => deleteCustomerFunc(row.data)}
                 >
-                    Delete
                 </Button>
-*/
+                //deleteCustomerFunc(row.data)
         },
-/*        {
-            width: 100,
+        {
+            width: 70,
             headerName: '',
-            field: '',
+            field: 'links.href',
             cellRenderer: row => <EditCustomer updateCustomer={updateCustomer} customer={row.data}/>
         },
-*/
+        {
+            width: 150,
+            headerName: '',
+            field: 'links.href',
+            cellRenderer: row =>  <AddTraining saveTraining={saveTraining} customer={row.data}/>
+        },
         {
             headerName: 'First name',
             field: 'firstname',
+            editable: true,
             sortable: true,
             filter: true,
             floatingFilter: 'agTextColumnFilter'

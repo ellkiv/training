@@ -15,7 +15,7 @@ import TrainingApp from './TrainingApp'
 
 
 export default function TabApp() {
-    const [value, setValue] = useState('training');
+    const [value, setValue] = useState('customers');
 
     const handleChange = (event, value) => {
         setValue(value);
@@ -40,7 +40,7 @@ export default function TabApp() {
                 </Tabs>
                 <Routes>
                     <Route path='/TrainingApp' element={<TrainingApp />} />
-                    <Route path='/CustomerApp' element={<CustomerApp />} />
+                    <Route path='*' element={<CustomerApp />} />
                 </Routes>
             </BrowserRouter>
         </div>
