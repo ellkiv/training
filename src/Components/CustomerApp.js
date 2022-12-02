@@ -18,6 +18,14 @@ export default function CustomerApp() {
     const [customers, setCustomers] = useState([]);
     const gridRef = useRef();
 
+    const columnTypes = {
+        filterAndSort: {
+            sortable: true,
+            filter: true,
+            floatingFilter: 'agTextColumnFilter'
+        }
+    }
+
     useEffect(() => fetchData(), []);
 
     const fetchData = () => {
@@ -35,11 +43,10 @@ export default function CustomerApp() {
         })
         .catch(error => {
             setError(`Error (${error.message})`);
-            //setCustomers(null);
         });
     }
 
-    // poista
+    //window confirmin tilalle snackbar
     //lisää viesti poiston onnistumisesta
     const deleteCustomerFunc = (link) => {
         console.log(link);
@@ -77,13 +84,13 @@ export default function CustomerApp() {
     }
 
     //uusiTreeni
-    const saveTraining = (customer) => {
-        fetch('https://customerrest.herokuapp.com/gettrainings', {
+    const saveTraining = (training) => {
+        fetch('https://customerrest.herokuapp.com/api/trainings', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(customer)
+            body: JSON.stringify(training)
         })
         .then(res => fetchData())
         .catch(err => console.error(err))
@@ -93,77 +100,71 @@ export default function CustomerApp() {
         {
             width: 70,
             headerName: '',
-            field: 'id',
+            field: 'delete',
             cellRenderer: row =>
                 <Button
                     color='error'
-                    endIcon={<DeleteForeverIcon />}
-                    onClick = {() => deleteCustomerFunc(row.data)}
+                    startIcon={<DeleteForeverIcon />}
+                    onClick = {() => deleteCustomerFunc(row.data.links[0].href)}
                 >
                 </Button>
-                //deleteCustomerFunc(row.data)
         },
         {
             width: 70,
             headerName: '',
-            field: 'links.href',
-            cellRenderer: row => <EditCustomer updateCustomer={updateCustomer} customer={row.data}/>
+            field: 'edit',
+            cellRenderer: row =>
+                <EditCustomer
+                    updateCustomer={updateCustomer}
+                    customer={row.data}
+                    link={row.data.links[0].href}
+                />
         },
         {
             width: 150,
             headerName: '',
-            field: 'links.href',
-            cellRenderer: row =>  <AddTraining saveTraining={saveTraining} customer={row.data}/>
+            field: 'addAct',
+            cellRenderer: row =>
+                <AddTraining
+                    saveTraining={saveTraining}
+                    customer={row.data}
+                    link={row.data.links[0].href}
+                />
         },
         {
             headerName: 'First name',
             field: 'firstname',
-            editable: true,
-            sortable: true,
-            filter: true,
-            floatingFilter: 'agTextColumnFilter'
+            type: 'filterAndSort'
         },
         {
             headerName: 'Last name',
             field: 'lastname',
-            sortable: true,
-            filter: true,
-            floatingFilter: 'agTextColumnFilter'
+            type: 'filterAndSort'
         },
         {
             headerName: 'Phone number',
             field: 'phone',
-            sortable: true,
-            filter: true,
-            floatingFilter: 'agTextColumnFilter'
+            type: 'filterAndSort'
         },
         {
             headerName: 'Email',
             field: 'email',
-            sortable: true,
-            filter: true,
-            floatingFilter: 'agTextColumnFilter'
+            type: 'filterAndSort'
         },
         {
             headerName: 'Street adress',
             field: 'streetaddress',
-            sortable: true,
-            filter: true,
-            floatingFilter: 'agTextColumnFilter'
+            type: 'filterAndSort'
         },
         {
             headerName: 'Postcode',
             field: 'postcode',
-            sortable: true,
-            filter: true,
-            floatingFilter: 'agTextColumnFilter'
+            type: 'filterAndSort'
         },
         {
             headerName: 'City',
             field: 'city',
-            sortable: true,
-            filter: true,
-            floatingFilter: 'agTextColumnFilter'
+            type: 'filterAndSort'
         }
     ]
 
@@ -185,6 +186,7 @@ export default function CustomerApp() {
                 columnDefs={columns}
                 rowData={customers}
                 animateRows={true}
+                columnTypes={columnTypes}
                 >
             </AgGridReact>
             <p>{error}</p>

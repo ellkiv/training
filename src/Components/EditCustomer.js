@@ -9,6 +9,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
+// tehty suoraan gridin muokkauksella esimerkissä
+
 export default function EditCustomer(props) {
     const [open, setOpen] = useState(false);
     const [customer, setCustomer] = useState({
@@ -18,7 +20,8 @@ export default function EditCustomer(props) {
         email: '',
         streetaddress: '',
         postcode: '',
-        city: ''
+        city: '',
+        linkId: ''
     })
 
     const handleClickOpen = () => {
@@ -31,6 +34,7 @@ export default function EditCustomer(props) {
             streetaddress: props.customer.streetaddress,
             postcode: props.customer.postcode,
             city: props.customer.city,
+            linkId: props.customer.links[0].href
         })
         setOpen(true);
     };
@@ -41,16 +45,17 @@ export default function EditCustomer(props) {
 
     const handleInputChange = (e) => {
         setCustomer({...customer, [e.target.name]: e.target.value})
+        console.log(customer)
     }
 
     const updateCustomer = () => {
-        props.updateCustomer(customer, props.customer.links.href);
+        props.updateCustomer(customer, props.customer.links[0].href);
         handleClose();
     }
 
     return (
         <div>
-            <Button endIcon={<EditIcon />} onClick={handleClickOpen}></Button>
+            <Button startIcon={<EditIcon />} onClick={handleClickOpen}></Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Edit Customer</DialogTitle>
                 <DialogContent>

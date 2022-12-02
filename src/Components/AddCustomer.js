@@ -7,6 +7,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
+//lisäyksin onnistumisesta ilmoitus
+//tietojen oikeellisuuden vahvistus: puh, postcode, email, nimi isolle alkukirjaimelle?
+
 export default function AddCustomer(props) {
     const [open, setOpen] = useState(false);
     const [customer, setCustomer] = useState({
@@ -40,7 +43,7 @@ export default function AddCustomer(props) {
         <div>
             <Button
                 style={{
-                    margin: 10,
+                    margin: 15,
                     display: 'flex',
                     justifyContent:
                     'flex-end'
