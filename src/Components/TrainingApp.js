@@ -3,12 +3,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
-
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import dayjs from 'dayjs'
 
-import Confirmation from './DelConfir'
-
-//nimiä ei voi lajitella (koska kaksi tietokenttää yhdessä?)
+import DelTraining from './DelTraining'
 
 export default function TrainingApp() {
     const [error, setError] = useState('');
@@ -18,10 +17,23 @@ export default function TrainingApp() {
     const columnTypes = {
         filterAndSort: {
             sortable: true,
-            filter: true,
-            floatingFilter: 'agTextColumnFilter'
+            filter: true
         }
     }
+
+    const [openAlert, setOpenAlert] = useState(false);
+
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+    const closeAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+        setOpenAlert(false);
+    };
+
 
     useEffect(() => fetchData(), []);
 
@@ -36,12 +48,10 @@ export default function TrainingApp() {
             } 
         })
         .then(responseData => {
-            console.log(responseData);
             setTrainings(responseData);
         })
         .catch(error => {
             setError(`Try again (${error.message})`);
-            setTrainings(null);
         });
     }
 
@@ -49,7 +59,10 @@ export default function TrainingApp() {
     const deleteTrainingFunc = (id) => {
         console.log(id);
         fetch(`https://customerrest.herokuapp.com/api/trainings/${id}`, {method: 'DELETE'})
-        .then(res => fetchData())
+        .then(res => {
+            fetchData();
+            setOpenAlert(true);
+        })
         .catch(err => console.error(err))
     }
 
@@ -58,7 +71,7 @@ export default function TrainingApp() {
             width: 60,
             headerName: '',
             field: 'del_id',
-            cellRenderer: row => <Confirmation id={row.data.id} deleteTrainingFunc={deleteTrainingFunc} />
+            cellRenderer: row => <DelTraining id={row.data.id} deleteTrainingFunc={deleteTrainingFunc} />
         },
         {
             headerName: 'Date',
@@ -93,7 +106,7 @@ export default function TrainingApp() {
             className="ag-theme-material"
                 style={{
                     width: '95%',
-                    height: 500,
+                    height: 600,
                     margin: 'auto'}}
         >
             <AgGridReact
@@ -108,6 +121,11 @@ export default function TrainingApp() {
                 columnTypes={columnTypes}
                 >
             </AgGridReact>
+            <Snackbar open={openAlert} autoHideDuration={5000} onClose={closeAlert}>
+                <Alert onClose={closeAlert} severity="success" sx={{ width: '100%' }}>
+                    Operation was successful!
+                </Alert>
+            </Snackbar>
             <p>{error}</p>
         </div>
     )

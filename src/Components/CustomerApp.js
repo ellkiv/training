@@ -4,13 +4,13 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 
-import Button from '@mui/material/Button';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 import AddCustomer from './AddCustomer';
 import EditCustomer from './EditCustomer';
-
 import AddTraining from './AddTraining';
+import DelCustomer from './DelCustomer';
 
 export default function CustomerApp() {
     const customerAPI = 'https://customerrest.herokuapp.com/api/customers';
@@ -25,6 +25,19 @@ export default function CustomerApp() {
             floatingFilter: 'agTextColumnFilter'
         }
     }
+
+    const [openAlert, setOpenAlert] = useState(false);
+
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+    const closeAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+        setOpenAlert(false);
+    };
 
     useEffect(() => fetchData(), []);
 
@@ -46,18 +59,16 @@ export default function CustomerApp() {
         });
     }
 
-    //window confirmin tilalle snackbar
-    //lisää viesti poiston onnistumisesta
     const deleteCustomerFunc = (link) => {
         console.log(link);
-        if(window.confirm('Are you sure?')) {
             fetch(link, {method: 'DELETE'})
-            .then(res => fetchData())
+            .then(res => {
+                fetchData();
+                setOpenAlert(true);
+            })
             .catch(err => console.error(err))
-        }
     }
 
-    //päivitä
     const updateCustomer = (customer, link) => {
         fetch(link, {
             method: 'PUT',
@@ -66,11 +77,13 @@ export default function CustomerApp() {
             },
             body: JSON.stringify(customer)
         })
-        .then(res => fetchData())
+        .then(res => {
+            fetchData();
+            setOpenAlert(true);
+        })
         .catch(err => console.error(err))
     }
 
-    //uusiAsiakas
     const saveCustomer = (customer) => {
         fetch(customerAPI, {
             method: 'POST',
@@ -79,11 +92,13 @@ export default function CustomerApp() {
             },
             body: JSON.stringify(customer)
         })
-        .then(res => fetchData())
+        .then(res => {
+            fetchData();
+            setOpenAlert(true);
+        })
         .catch(err => console.error(err))
     }
 
-    //uusiTreeni
     const saveTraining = (training) => {
         fetch('https://customerrest.herokuapp.com/api/trainings', {
             method: 'POST',
@@ -92,7 +107,10 @@ export default function CustomerApp() {
             },
             body: JSON.stringify(training)
         })
-        .then(res => fetchData())
+        .then(res => {
+            fetchData();
+            setOpenAlert(true);
+        })
         .catch(err => console.error(err))
     }
 
@@ -102,12 +120,10 @@ export default function CustomerApp() {
             headerName: '',
             field: 'delete',
             cellRenderer: row =>
-                <Button
-                    color='error'
-                    startIcon={<DeleteForeverIcon />}
-                    onClick = {() => deleteCustomerFunc(row.data.links[0].href)}
-                >
-                </Button>
+                <DelCustomer
+                    link={row.data.links[0].href}
+                    deleteCustomerFunc={deleteCustomerFunc}
+                />
         },
         {
             width: 70,
@@ -173,7 +189,7 @@ export default function CustomerApp() {
             className="ag-theme-material"
                 style={{
                     width: '95%',
-                    height: 700,
+                    height: 500,
                     margin: 'auto'}}
         >
             <AddCustomer saveCustomer={saveCustomer} />
@@ -189,6 +205,11 @@ export default function CustomerApp() {
                 columnTypes={columnTypes}
                 >
             </AgGridReact>
+            <Snackbar open={openAlert} autoHideDuration={5000} onClose={closeAlert}>
+                <Alert onClose={closeAlert} severity="success" sx={{ width: '100%' }}>
+                    Operation was successful!
+                </Alert>
+            </Snackbar>
             <p>{error}</p>
         </div>
     );

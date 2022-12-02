@@ -15,9 +15,8 @@ import Stack from '@mui/material/Stack';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-// pvm syötetään, ei klo aikaa
 // snackbarin sijainti on surkea
 
 export default function AddTraining(props) {
@@ -25,14 +24,12 @@ export default function AddTraining(props) {
     const [training, setTraining] = useState([]);
 
     const handleClickOpen = () => {
-        console.log(props.customer);
         setTraining({
             date: null,
             duration: '',
             activity: '',
             customer: props.customer.links[0].href
         })
-        console.log(training);
         setOpen(true);
     };
   
@@ -42,7 +39,6 @@ export default function AddTraining(props) {
 
     const handleInputChange = (e) => {
         setTraining({...training, [e.target.name]: e.target.value});
-        console.log(training);
     }
 
     const addTraining = (e) => {
@@ -54,14 +50,14 @@ export default function AddTraining(props) {
 
     return (
         <div>
-            <Button onClick={handleClickOpen}>Add Training</Button>
+            <Button size="small" onClick={handleClickOpen}>Add Training</Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>New Training</DialogTitle>
                 <Stack spacing={2} sx={{ width: '100%' }}>
                 <DialogContent>
                 <FormControl sx={{ m:1, minWidth: 150 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
+                        <DateTimePicker
                             label="Date"
                             value={training.date}
                             onChange={date =>

@@ -25,7 +25,6 @@ export default function EditCustomer(props) {
     })
 
     const handleClickOpen = () => {
-        console.log(props.customer)
         setCustomer({
             firstname: props.customer.firstname,
             lastname: props.customer.lastname,
@@ -45,7 +44,6 @@ export default function EditCustomer(props) {
 
     const handleInputChange = (e) => {
         setCustomer({...customer, [e.target.name]: e.target.value})
-        console.log(customer)
     }
 
     const updateCustomer = () => {

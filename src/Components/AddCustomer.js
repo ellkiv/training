@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
 
 import Button from '@mui/material/Button';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-//lisäyksin onnistumisesta ilmoitus
 //tietojen oikeellisuuden vahvistus: puh, postcode, email, nimi isolle alkukirjaimelle?
+// voiko textfieldejä tiivistää, on ruman näköiset (monta kertaa samat määrittelyt)
 
 export default function AddCustomer(props) {
     const [open, setOpen] = useState(false);
@@ -43,15 +45,14 @@ export default function AddCustomer(props) {
         <div>
             <Button
                 style={{
-                    margin: 15,
+                    margin: 10,
                     display: 'flex',
                     justifyContent:
                     'flex-end'
                 }}
-                variant="outlined"
                 onClick={handleClickOpen}
+                startIcon={<AddCircleOutlineIcon />}
             >
-                Add Customer
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>New Customer</DialogTitle>
@@ -78,6 +79,7 @@ export default function AddCustomer(props) {
                     <TextField
                         margin="dense"
                         name="phone"
+                        type="number"
                         value={customer.phone}
                         onChange={e => handleInputChange(e)}
                         label="Phone"
@@ -110,6 +112,7 @@ export default function AddCustomer(props) {
                         label="Postcode"
                         fullWidth
                         variant="standard"
+                        type="number"
                     />
                     <TextField
                         margin="dense"

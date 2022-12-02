@@ -8,10 +8,9 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
 //snackbar aukeaa väärään kohtaan(ensimmäinen ei näy)
-//success message jos poisto onnistui
 
-export default function Confirmation(props) {
-    const [open, setOpen] = React.useState(false);
+export default function DelTraining(props) {
+    const [open, setOpen] = useState(false);
     const [id, setId] = useState('');
 
     const Alert = React.forwardRef(function Alert(props, ref) {
