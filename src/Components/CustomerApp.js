@@ -11,6 +11,7 @@ import AddCustomer from './AddCustomer';
 import EditCustomer from './EditCustomer';
 import AddTraining from './AddTraining';
 import DelCustomer from './DelCustomer';
+import CSV from './CSV'
 
 export default function CustomerApp() {
     const customerAPI = 'https://customerrest.herokuapp.com/api/customers';
@@ -193,6 +194,7 @@ export default function CustomerApp() {
                     margin: 'auto'}}
         >
             <AddCustomer saveCustomer={saveCustomer} />
+            <CSV customers={customers} />
             <AgGridReact
                 ref={gridRef}
                 onGridReady={

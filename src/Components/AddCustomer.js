@@ -47,8 +47,7 @@ export default function AddCustomer(props) {
                 style={{
                     margin: 10,
                     display: 'flex',
-                    justifyContent:
-                    'flex-end'
+                    justifyContent: 'flex-end'
                 }}
                 onClick={handleClickOpen}
                 startIcon={<AddCircleOutlineIcon />}

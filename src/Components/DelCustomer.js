@@ -35,41 +35,45 @@ export default function DelCustomer(props) {
         handleClose();
     }
 
-  const action = (
-    <React.Fragment>
-        <Button onClick={handleClose} startIcon={<UndoIcon />}></Button>
-        <Button onClick={deleteCustomer}>
-            Delete
-        </Button>
-        <IconButton
-            size="small"
-            aria-label="close"
-            color="inherit"
-            onClick={handleClose}
-        >
-        <CloseIcon fontSize="small" />
-        </IconButton>
-    </React.Fragment>
-  );
-
-  return (
-    <div>
-        <Button
-            color='error'
-            startIcon={<DeleteForeverIcon />}
-            onClick = {handleClick}
+    const action = (
+        <React.Fragment>
+            <Button onClick={handleClose} startIcon={<UndoIcon />}></Button>
+            <Button onClick={deleteCustomer}>
+                Delete
+            </Button>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
             >
-        </Button>
-        <Snackbar
-            open={open}
-            autoHideDuration={6000}
-            onClose={handleClose}
-            action={action}
-        >
-            <Alert onClose={handleClose} action={action} severity="warning" sx={{ width: '100%' }}>
-                Do you want to Delete this customer?
-            </Alert>
-        </Snackbar>
-    </div>
-  );
+            <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
+
+    return (
+        <div>
+            <div>
+                <Button
+                    color='error'
+                    startIcon={<DeleteForeverIcon />}
+                    onClick = {handleClick}
+                    >
+                </Button>
+            </div>
+            <div>
+                <Snackbar
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    action={action}
+                >
+                    <Alert onClose={handleClose} action={action} severity="warning" sx={{ width: '100%' }}>
+                        Do you want to Delete this customer?
+                    </Alert>
+                </Snackbar>
+            </div>
+        </div>
+    );
 }

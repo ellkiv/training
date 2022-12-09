@@ -14,12 +14,13 @@ import {
     Link,
   } from 'react-router-dom';
 
-import CustomerApp from './CustomerApp'
-import TrainingApp from './TrainingApp'
-
+import CustomerApp from './CustomerApp';
+import TrainingApp from './TrainingApp';
+import CalendarApp from './CalendarApp';
 
 export default function TabApp() {
     const [value, setValue] = useState('customers');
+    const [trainings, setTrainings] = useState([]);
 
     const handleChange = (event, value) => {
         setValue(value);
@@ -30,21 +31,28 @@ export default function TabApp() {
             <BrowserRouter>
                 <Tabs value={value} onChange={handleChange}>
                     <Tab
+                        value='customers'
+                        label='Customers'
+                        component={Link}
+                        to='/CustomerApp'
+                    />                    
+                    <Tab
                         value='training'
                         label='Training'
                         component={Link}
                         to="/TrainingApp"
                     />
                     <Tab
-                        value='customers'
-                        label='Customers'
+                        value='calendar'
+                        label='Calendar'
                         component={Link}
-                        to='/CustomerApp'
+                        to='/CalendarApp'
                     />
                 </Tabs>
                 <Routes>
-                    <Route path='/TrainingApp' element={<TrainingApp />} />
                     <Route path='*' element={<CustomerApp />} />
+                    <Route path='/TrainingApp' element={<TrainingApp setTrainings={setTrainings} trainings={trainings} />} />
+                    <Route path='/CalendarApp' element={<CalendarApp setTrainings={setTrainings} trainings={trainings} />} />
                 </Routes>
             </BrowserRouter>
         </div>

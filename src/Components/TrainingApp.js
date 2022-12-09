@@ -3,15 +3,17 @@ import React, { useState, useEffect, useRef } from 'react'
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
+
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import dayjs from 'dayjs'
 
-import DelTraining from './DelTraining'
+import dayjs from 'dayjs';
 
-export default function TrainingApp() {
+import DelTraining from './DelTraining';
+
+export default function TrainingApp( {trainings, setTrainings}) {
+
     const [error, setError] = useState('');
-    const [trainings, setTrainings] = useState([]);
     const gridRef = useRef();
 
     const columnTypes = {
@@ -34,7 +36,6 @@ export default function TrainingApp() {
         setOpenAlert(false);
     };
 
-
     useEffect(() => fetchData(), []);
 
     const fetchData = () => {
@@ -55,7 +56,6 @@ export default function TrainingApp() {
         });
     }
 
-    // poista
     const deleteTrainingFunc = (id) => {
         console.log(id);
         fetch(`https://customerrest.herokuapp.com/api/trainings/${id}`, {method: 'DELETE'})
@@ -102,31 +102,34 @@ export default function TrainingApp() {
     ]
 
     return (
-        <div
-            className="ag-theme-material"
-                style={{
-                    width: '95%',
-                    height: 600,
-                    margin: 'auto'}}
-        >
-            <AgGridReact
-                ref={gridRef}
-                onGridReady={
-                    params => gridRef.current = params.api
-                }
-                rowSelection='single'
-                columnDefs={columns}
-                rowData={trainings}
-                animateRows={true}
-                columnTypes={columnTypes}
-                >
-            </AgGridReact>
-            <Snackbar open={openAlert} autoHideDuration={5000} onClose={closeAlert}>
-                <Alert onClose={closeAlert} severity="success" sx={{ width: '100%' }}>
-                    Operation was successful!
-                </Alert>
-            </Snackbar>
-            <p>{error}</p>
+        <div>
+            <div
+                className="ag-theme-material"
+                    style={{
+                        width: '95%',
+                        height: 600,
+                        margin: 'auto'}}
+            >
+                <AgGridReact
+                    ref={gridRef}
+                    onGridReady={
+                        params => gridRef.current = params.api
+                    }
+                    rowSelection='single'
+                    columnDefs={columns}
+                    rowData={trainings}
+                    animateRows={true}
+                    columnTypes={columnTypes}
+                    >
+                </AgGridReact>
+                <Snackbar open={openAlert} autoHideDuration={5000} onClose={closeAlert}>
+                    <Alert onClose={closeAlert} severity="success" sx={{ width: '100%' }}>
+                        Operation was successful!
+                    </Alert>
+                </Snackbar>
+                <p>{error}</p>
+            </div>
         </div>
+
     )
 }
