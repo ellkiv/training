@@ -22,7 +22,7 @@ export default function CSV(props) {
                     margin: 10,
                     display: 'flex'
                 }}
-                >
+            >
                 <CSVLink
                     headers={headers}
                     data={props.customers}
