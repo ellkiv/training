@@ -5,6 +5,7 @@ import format from 'date-fns/format'
 import parse from 'date-fns/parse'
 import startOfWeek from 'date-fns/startOfWeek'
 import getDay from 'date-fns/getDay'
+import { add } from 'date-fns'
 
 const locales = {
     'fi': require('date-fns/locale/fi')
@@ -19,31 +20,30 @@ const locales = {
   })
 
 export default function CalendarApp( { trainings } ){
-    // päivämäärien muodot ei ole ok
-    // alkuajasta pitäisi saada muokattua loppuaika
-    // virheilmoitusta tulee edelleen kun ensimmäistä kertaa vaihtaa kalenterinäkymää!
-    // kalenteri toimii sen jälkeen kun on kerran käynyt trainings sivulla
+  
+  // virheilmoitusta tulee edelleen kun ensimmäistä kertaa vaihtaa kalenterinäkymää!
+  // kalenteri toimii sen jälkeen kun on kerran käynyt trainings sivulla
 
-    const events = trainings.map((training)=>{
-        return {
-          id: training.id,
-          title: `${training.activity} with ${training.customer.firstname} ${training.customer.lastname}`,
-          start: new Date(training.date),
-          end: new Date(training.date),
-          allDay: false
-        }
-      })
+  const events = trainings.map((training)=>{
+    return {
+      id: training.id,
+      title: `${training.activity} with ${training.customer.firstname} `,
+      start: new Date(training.date),
+      end: add(new Date(training.date), {minutes: training.duration}),
+      allDay: false
+    }
+  })
 
-    return(
-        <div>
-            <Calendar
-                localizer={localizer}
-                events={events}
-                startAccessor="start"
-                endAccessor="end"
-                style={{ height: 500, margin: '50px' }}
-            />
-        </div>
-    );
+  return(
+    <div>
+      <Calendar
+        localizer={localizer}
+        events={events}
+        startAccessor="start"
+        endAccessor="end"
+        style={{ height: 500, margin: '50px' }}
+      />
+    </div>
+  );
 
 }
