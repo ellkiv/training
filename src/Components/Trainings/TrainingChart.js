@@ -22,10 +22,9 @@ export default function Recharts( {trainings, fetchData} ) {
     return (
         <div className="row">
             <div className="col-md-12">
-                <h2>Charts with recharts library</h2>
+                <h2>Training durations by activity</h2>
             </div>
             <div className="section col-md-6">
-                <h3 className="section-title">Bar Chart</h3>
                 <div className="section-content">
                     <ResponsiveContainer width="90%" height={400}>
                         <BarChart data={grouped} margin={{ top: 30, right: 0, bottom: 15, left: 0 }}>
