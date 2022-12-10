@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import format from 'date-fns/format'
@@ -19,10 +19,15 @@ const locales = {
     locales,
   })
 
-export default function CalendarApp( { trainings } ){
+export default function CalendarApp( { trainings, fetchData } ){
   
   // virheilmoitusta tulee edelleen kun ensimmäistä kertaa vaihtaa kalenterinäkymää!
   // kalenteri toimii sen jälkeen kun on kerran käynyt trainings sivulla
+
+  useEffect(() => {
+    fetchData();
+    console.log('calendar')
+  }, []);
 
   const events = trainings.map((training)=>{
     return {

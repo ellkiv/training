@@ -4,7 +4,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 
 import EditCustomer from './EditCustomer';
-import AddTraining from './AddTraining';
+import AddTraining from '../Trainings/AddTraining';
 import DelCustomer from './DelCustomer';
 
 export default function CustomerTable(props) {

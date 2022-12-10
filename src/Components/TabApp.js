@@ -1,20 +1,34 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Tabs, Tab } from '@mui/material';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
-import {
-    BrowserRouter,
-    Routes,
-    Route,
-    Link,
-  } from 'react-router-dom';
-
-import CustomerApp from './CustomerApp';
-import TrainingApp from './TrainingApp';
-import CalendarApp from './CalendarApp';
+import CustomerApp from './Customers/CustomerApp';
+import TrainingApp from './Trainings/TrainingApp';
+import CalendarApp from './Trainings/CalendarApp';
+import TrainingChart from './Trainings/TrainingChart'
 
 export default function TabApp() {
     const [value, setValue] = useState('customers');
+    const [error, setError] = useState('');
     const [trainings, setTrainings] = useState([]);
+
+    const fetchData = () => {
+        fetch('https://customerrest.herokuapp.com/gettrainings')
+        .then(response => {
+            console.log(response);
+            if (response.ok){
+                return response.json();
+            } else {
+                throw (new Error(response.statusText));
+            } 
+        })
+        .then(responseData => {
+            setTrainings(responseData);
+        })
+        .catch(error => {
+            setError(`Try again (${error.message})`);
+        });
+    }
 
     const handleChange = (event, value) => {
         setValue(value);
@@ -44,13 +58,45 @@ export default function TabApp() {
                                 component={Link}
                                 to='/CalendarApp'
                             />
+                            <Tab
+                                value='chart'
+                                label='Chart'
+                                component={Link}
+                                to='/TrainingChart'
+                            />
                         </Tabs>
                     </Toolbar>
                 </AppBar>
                 <Routes>
                     <Route path='*' element={<CustomerApp />} />
-                    <Route path='/TrainingApp' element={<TrainingApp setTrainings={setTrainings} trainings={trainings} />} />
-                    <Route path='/CalendarApp' element={<CalendarApp setTrainings={setTrainings} trainings={trainings} />} />
+                    <Route
+                        path='/TrainingApp'
+                        element={
+                            <TrainingApp
+                                trainings={trainings}
+                                fetchData={fetchData}
+                                error={error}
+                            />
+                        }
+                    />
+                    <Route
+                        path='/CalendarApp'
+                        element={
+                            <CalendarApp
+                                trainings={trainings}
+                                fetchData={fetchData}
+                            />
+                        }
+                    />
+                    <Route
+                        path='/TrainingChart'
+                        element={
+                            <TrainingChart
+                                trainings={trainings}
+                                fetchData={fetchData}
+                            />
+                        }
+                    />
                 </Routes>
             </BrowserRouter>
         </div>

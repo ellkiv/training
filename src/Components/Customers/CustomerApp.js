@@ -25,7 +25,10 @@ export default function CustomerApp() {
         setOpenAlert(false);
     };
 
-    useEffect(() => fetchData(), []);
+    useEffect(() => {
+        fetchData();
+        console.log('fetched')
+      }, []);
 
     const fetchData = () => {
         fetch(customerAPI)
