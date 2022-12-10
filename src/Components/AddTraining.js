@@ -6,7 +6,6 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
@@ -17,13 +16,12 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-// snackbarin sijainti on surkea
-
 export default function AddTraining(props) {
     const [open, setOpen] = useState(false);
     const [training, setTraining] = useState([]);
 
     const handleClickOpen = () => {
+        console.log(props.customer.links[0].href);
         setTraining({
             date: null,
             duration: '',

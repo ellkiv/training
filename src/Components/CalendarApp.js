@@ -21,7 +21,7 @@ const locales = {
 export default function CalendarApp( { trainings } ){
     // päivämäärien muodot ei ole ok
     // alkuajasta pitäisi saada muokattua loppuaika
-    // virheilmoitusta tulee edelleen!
+    // virheilmoitusta tulee edelleen kun ensimmäistä kertaa vaihtaa kalenterinäkymää!
     // kalenteri toimii sen jälkeen kun on kerran käynyt trainings sivulla
 
     const events = trainings.map((training)=>{

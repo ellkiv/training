@@ -1,15 +1,11 @@
 import React, {useState} from 'react';
-
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
-
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-
-// tehty suoraan gridin muokkauksella esimerkissä
 
 export default function EditCustomer(props) {
     const [open, setOpen] = useState(false);

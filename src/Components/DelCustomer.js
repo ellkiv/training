@@ -7,7 +7,7 @@ import UndoIcon from '@mui/icons-material/Undo';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
-//snackbar aukeaa väärään kohtaan(ensimmäinen ei näy)
+//snackbar aukeaa väärään kohtaan (ensimmäinen ei näy)
 
 export default function DelCustomer(props) {
     const [open, setOpen] = useState(false);
@@ -25,7 +25,7 @@ export default function DelCustomer(props) {
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
-        return;
+            return;
         }
         setOpen(false);
     };

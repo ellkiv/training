@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
-
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
-
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-
 import dayjs from 'dayjs';
 
 import DelTraining from './DelTraining';

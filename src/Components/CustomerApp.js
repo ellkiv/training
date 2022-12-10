@@ -1,31 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react'
-
-import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-material.css';
-
+import React, { useState, useEffect } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import Toolbar from '@mui/material/Toolbar';
 
 import AddCustomer from './AddCustomer';
-import EditCustomer from './EditCustomer';
-import AddTraining from './AddTraining';
-import DelCustomer from './DelCustomer';
 import CSV from './CSV'
+import CustomerTable from './CustomerTable';
 
 export default function CustomerApp() {
     const customerAPI = 'https://customerrest.herokuapp.com/api/customers';
     const [error, setError] = useState('');
     const [customers, setCustomers] = useState([]);
-    const gridRef = useRef();
-
-    const columnTypes = {
-        filterAndSort: {
-            sortable: true,
-            filter: true,
-            floatingFilter: 'agTextColumnFilter'
-        }
-    }
 
     const [openAlert, setOpenAlert] = useState(false);
 
@@ -115,98 +100,20 @@ export default function CustomerApp() {
         .catch(err => console.error(err))
     }
 
-    const columns = [
-        {
-            width: 70,
-            headerName: '',
-            field: 'delete',
-            cellRenderer: row =>
-                <DelCustomer
-                    link={row.data.links[0].href}
-                    deleteCustomerFunc={deleteCustomerFunc}
-                />
-        },
-        {
-            width: 70,
-            headerName: '',
-            field: 'edit',
-            cellRenderer: row =>
-                <EditCustomer
-                    updateCustomer={updateCustomer}
-                    customer={row.data}
-                    link={row.data.links[0].href}
-                />
-        },
-        {
-            width: 150,
-            headerName: '',
-            field: 'addAct',
-            cellRenderer: row =>
-                <AddTraining
-                    saveTraining={saveTraining}
-                    customer={row.data}
-                    link={row.data.links[0].href}
-                />
-        },
-        {
-            headerName: 'First name',
-            field: 'firstname',
-            type: 'filterAndSort'
-        },
-        {
-            headerName: 'Last name',
-            field: 'lastname',
-            type: 'filterAndSort'
-        },
-        {
-            headerName: 'Phone number',
-            field: 'phone',
-            type: 'filterAndSort'
-        },
-        {
-            headerName: 'Email',
-            field: 'email',
-            type: 'filterAndSort'
-        },
-        {
-            headerName: 'Street adress',
-            field: 'streetaddress',
-            type: 'filterAndSort'
-        },
-        {
-            headerName: 'Postcode',
-            field: 'postcode',
-            type: 'filterAndSort'
-        },
-        {
-            headerName: 'City',
-            field: 'city',
-            type: 'filterAndSort'
-        }
-    ]
-
     return (
-        <div
-            className="ag-theme-material"
-                style={{
-                    width: '95%',
-                    height: 500,
-                    margin: 'auto'}}
-        >
-            <AddCustomer saveCustomer={saveCustomer} />
-            <CSV customers={customers} />
-            <AgGridReact
-                ref={gridRef}
-                onGridReady={
-                    params => gridRef.current = params.api
-                }
-                rowSelection='single'
-                columnDefs={columns}
-                rowData={customers}
-                animateRows={true}
-                columnTypes={columnTypes}
-                >
-            </AgGridReact>
+        <div>
+            <Toolbar>
+                <AddCustomer saveCustomer={saveCustomer} />
+                <CSV customers={customers} />
+            </Toolbar> 
+            <div>
+                <CustomerTable
+                    customers={customers}
+                    deleteCustomerFunc={deleteCustomerFunc}
+                    updateCustomer={updateCustomer}
+                    saveTraining={saveTraining}
+                />
+            </div>
             <Snackbar open={openAlert} autoHideDuration={5000} onClose={closeAlert}>
                 <Alert onClose={closeAlert} severity="success" sx={{ width: '100%' }}>
                     Operation was successful!

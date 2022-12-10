@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-//import AppBar from '@mui/material/AppBar';
-//import Toolbar from '@mui/material/Toolbar';
-//import Typography from '@mui/material/Typography';
-//import Box from '@mui/material/Box';
+import { AppBar, Toolbar, Tabs, Tab } from '@mui/material';
 
 import {
     BrowserRouter,
@@ -29,26 +23,30 @@ export default function TabApp() {
     return (
         <div>
             <BrowserRouter>
-                <Tabs value={value} onChange={handleChange}>
-                    <Tab
-                        value='customers'
-                        label='Customers'
-                        component={Link}
-                        to='/CustomerApp'
-                    />                    
-                    <Tab
-                        value='training'
-                        label='Training'
-                        component={Link}
-                        to="/TrainingApp"
-                    />
-                    <Tab
-                        value='calendar'
-                        label='Calendar'
-                        component={Link}
-                        to='/CalendarApp'
-                    />
-                </Tabs>
+                <AppBar position="static">
+                    <Toolbar>
+                        <Tabs value={value} onChange={handleChange}>
+                            <Tab
+                                value='customers'
+                                label='Customers'
+                                component={Link}
+                                to='/CustomerApp'
+                            />                    
+                            <Tab
+                                value='training'
+                                label='Training'
+                                component={Link}
+                                to="/TrainingApp"
+                            />
+                            <Tab
+                                value='calendar'
+                                label='Calendar'
+                                component={Link}
+                                to='/CalendarApp'
+                            />
+                        </Tabs>
+                    </Toolbar>
+                </AppBar>
                 <Routes>
                     <Route path='*' element={<CustomerApp />} />
                     <Route path='/TrainingApp' element={<TrainingApp setTrainings={setTrainings} trainings={trainings} />} />
