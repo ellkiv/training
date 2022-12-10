@@ -29,12 +29,12 @@ export default function AddCustomer(props) {
 
     const handleInputChange = (e) => {
         setCustomer({...customer, [e.target.name]: e.target.value})
-    }
+    };
 
     const addCustomer = () => {
         props.saveCustomer(customer);
         handleClose();
-    }
+    };
 
     return (
         <div>
