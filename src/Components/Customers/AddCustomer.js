@@ -7,9 +7,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-//tietojen oikeellisuuden vahvistus: puh, postcode, email, nimi isolle alkukirjaimelle?
-// voiko textfieldejä tiivistää, on ruman näköiset (monta kertaa samat määrittelyt)
-
 export default function AddCustomer(props) {
     const [open, setOpen] = useState(false);
     const [customer, setCustomer] = useState({
@@ -120,7 +117,6 @@ export default function AddCustomer(props) {
                         fullWidth
                         variant="standard"
                     />
-                    
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={addCustomer}>Save</Button>
@@ -128,6 +124,5 @@ export default function AddCustomer(props) {
                 </DialogActions>
             </Dialog>
         </div>
-
     )
 }

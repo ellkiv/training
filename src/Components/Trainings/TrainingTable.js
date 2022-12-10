@@ -15,7 +15,7 @@ export default function TrainingTable(props) {
             sortable: true,
             filter: true
         }
-    }
+    };
 
     const columns = [
         {
@@ -50,31 +50,28 @@ export default function TrainingTable(props) {
             },
             type: 'filterAndSort'
         }
-    ]
+    ];
 
     return (
-        <div>
-            <div
-                className="ag-theme-material"
-                    style={{
-                        width: '95%',
-                        height: 600,
-                        margin: 'auto'}}
-            >
-                <AgGridReact
-                    ref={gridRef}
-                    onGridReady={
-                        params => gridRef.current = params.api
-                    }
-                    rowSelection='single'
-                    columnDefs={columns}
-                    rowData={props.trainings}
-                    animateRows={true}
-                    columnTypes={columnTypes}
-                    >
-                </AgGridReact>
-            </div>
+        <div
+            className="ag-theme-material"
+                style={{
+                    width: '95%',
+                    height: 600,
+                    margin: 'auto'}}
+        >
+            <AgGridReact
+                ref={gridRef}
+                onGridReady={
+                    params => gridRef.current = params.api
+                }
+                rowSelection='single'
+                columnDefs={columns}
+                rowData={props.trainings}
+                animateRows={true}
+                columnTypes={columnTypes}
+                >
+            </AgGridReact>
         </div>
-
     )
 }

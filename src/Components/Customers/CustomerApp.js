@@ -27,8 +27,8 @@ export default function CustomerApp() {
 
     useEffect(() => {
         fetchData();
-        console.log('fetched')
-      }, []);
+        console.log('customers')
+    }, []);
 
     const fetchData = () => {
         fetch(customerAPI)

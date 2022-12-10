@@ -7,8 +7,6 @@ import UndoIcon from '@mui/icons-material/Undo';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
-//snackbar aukeaa väärään kohtaan(ensimmäinen ei näy)
-
 export default function DelTraining(props) {
     const [open, setOpen] = useState(false);
     const [id, setId] = useState('');
@@ -38,9 +36,7 @@ export default function DelTraining(props) {
     const action = (
         <React.Fragment>
             <Button onClick={handleClose} startIcon={<UndoIcon />}></Button>
-            <Button onClick={deleteTraining}>
-                Delete
-            </Button>
+            <Button onClick={deleteTraining}>Delete</Button>
             <IconButton
                 size="small"
                 aria-label="close"

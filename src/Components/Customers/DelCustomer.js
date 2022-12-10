@@ -7,8 +7,6 @@ import UndoIcon from '@mui/icons-material/Undo';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
-//snackbar aukeaa väärään kohtaan (ensimmäinen ei näy)
-
 export default function DelCustomer(props) {
     const [open, setOpen] = useState(false);
     const [link, setLink] = useState('');

@@ -8,21 +8,18 @@ import getDay from 'date-fns/getDay'
 import { add } from 'date-fns'
 
 const locales = {
-    'fi': require('date-fns/locale/fi')
-  }
+  'fi': require('date-fns/locale/fi')
+}
   
-  const localizer = dateFnsLocalizer({
-    format,
-    parse,
-    startOfWeek,
-    getDay,
-    locales,
-  })
+const localizer = dateFnsLocalizer({
+  format,
+  parse,
+  startOfWeek,
+  getDay,
+  locales,
+})
 
 export default function CalendarApp( { trainings, fetchData } ){
-  
-  // virheilmoitusta tulee edelleen kun ensimmäistä kertaa vaihtaa kalenterinäkymää!
-  // kalenteri toimii sen jälkeen kun on kerran käynyt trainings sivulla
 
   useEffect(() => {
     fetchData();

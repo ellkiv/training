@@ -32,7 +32,7 @@ export default function TrainingApp({trainings, fetchData, error}) {
             setOpenAlert(true);
         })
         .catch(err => console.error(err))
-    }
+    };
 
     return (
         <div>
@@ -44,6 +44,5 @@ export default function TrainingApp({trainings, fetchData, error}) {
             </Snackbar>
             <p>{error}</p>
         </div>
-
     )
 }

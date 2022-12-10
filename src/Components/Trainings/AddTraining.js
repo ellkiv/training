@@ -52,57 +52,57 @@ export default function AddTraining(props) {
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>New Training</DialogTitle>
                 <Stack spacing={2} sx={{ width: '100%' }}>
-                <DialogContent>
-                <FormControl sx={{ m:1, minWidth: 150 }}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DateTimePicker
-                            label="Date"
-                            value={training.date}
-                            onChange={date =>
-                                setTraining({
-                                    date: date,
-                                    duration: training.duration,
-                                    activity: training.activity,
-                                    customer: training.customer
-                                })
-                            }
-                            renderInput={(params) => <TextField {...params} />}
-                        />
-                    </LocalizationProvider>
-                    </FormControl> 
+                    <DialogContent>
                     <FormControl sx={{ m:1, minWidth: 150 }}>
-                        <InputLabel>Duration</InputLabel>
-                        <Select
-                            name="duration"
-                            value={training.duration}
-                            label="Duration"
-                            onChange={e => handleInputChange(e)}
-                        >
-                            <MenuItem value={'15'}>15 minutes</MenuItem>
-                            <MenuItem value={'30'}>30 minutes</MenuItem>
-                            <MenuItem value={'45'}>45 minutes</MenuItem>
-                            <MenuItem value={'60'}>one hour</MenuItem>
-                            <MenuItem value={'90'}>one hour 30 minutes</MenuItem>
-                            <MenuItem value={'120'}>two hours</MenuItem>
-                        </Select>
-                    </FormControl> 
-                    <FormControl sx={{ m:1, minWidth: 150 }}>
-                        <InputLabel>Activity</InputLabel>
-                        <Select
-                            name="activity"
-                            value={training.activity}
-                            label="Activity"
-                            onChange={e => handleInputChange(e)}
-                        >
-                            <MenuItem value={'Yoga'}>Yoga</MenuItem>
-                            <MenuItem value={'Spinning'}>Spinning</MenuItem>
-                            <MenuItem value={'Jogging'}>Jogging</MenuItem>
-                            <MenuItem value={'Gym Training'}>Gym Training</MenuItem>
-                            <MenuItem value={'Fitness'}>Fitness</MenuItem>
-                            <MenuItem value={'Zumba'}>Zumba</MenuItem>
-                        </Select>
-                    </FormControl>                   
-                </DialogContent>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DateTimePicker
+                                label="Date"
+                                value={training.date}
+                                onChange={date =>
+                                    setTraining({
+                                        date: date,
+                                        duration: training.duration,
+                                        activity: training.activity,
+                                        customer: training.customer
+                                    })
+                                }
+                                renderInput={(params) => <TextField {...params} />}
+                            />
+                        </LocalizationProvider>
+                        </FormControl> 
+                        <FormControl sx={{ m:1, minWidth: 150 }}>
+                            <InputLabel>Duration</InputLabel>
+                            <Select
+                                name="duration"
+                                value={training.duration}
+                                label="Duration"
+                                onChange={e => handleInputChange(e)}
+                            >
+                                <MenuItem value={'15'}>15 minutes</MenuItem>
+                                <MenuItem value={'30'}>30 minutes</MenuItem>
+                                <MenuItem value={'45'}>45 minutes</MenuItem>
+                                <MenuItem value={'60'}>one hour</MenuItem>
+                                <MenuItem value={'90'}>one hour 30 minutes</MenuItem>
+                                <MenuItem value={'120'}>two hours</MenuItem>
+                            </Select>
+                        </FormControl> 
+                        <FormControl sx={{ m:1, minWidth: 150 }}>
+                            <InputLabel>Activity</InputLabel>
+                            <Select
+                                name="activity"
+                                value={training.activity}
+                                label="Activity"
+                                onChange={e => handleInputChange(e)}
+                            >
+                                <MenuItem value={'Yoga'}>Yoga</MenuItem>
+                                <MenuItem value={'Spinning'}>Spinning</MenuItem>
+                                <MenuItem value={'Jogging'}>Jogging</MenuItem>
+                                <MenuItem value={'Gym Training'}>Gym Training</MenuItem>
+                                <MenuItem value={'Fitness'}>Fitness</MenuItem>
+                                <MenuItem value={'Zumba'}>Zumba</MenuItem>
+                            </Select>
+                        </FormControl>                   
+                    </DialogContent>
                 </Stack>
                 <DialogActions>
                     <Button onClick={addTraining}>Save</Button>

@@ -29,12 +29,12 @@ export default function Recharts( {trainings, fetchData} ) {
                 <div className="section-content">
                     <ResponsiveContainer width="90%" height={400}>
                         <BarChart data={grouped} margin={{ top: 30, right: 0, bottom: 15, left: 0 }}>
-                        <XAxis dataKey="activity" />
-                        <YAxis />
-                        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                        <Tooltip />
-                        <Legend/>
-                        <Bar dataKey="duration" fill="#FB8833" />
+                            <XAxis dataKey="activity" />
+                            <YAxis />
+                            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                            <Tooltip />
+                            <Legend/>
+                            <Bar dataKey="duration" fill="#FB8833" />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
