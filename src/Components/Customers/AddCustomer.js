@@ -17,7 +17,7 @@ export default function AddCustomer(props) {
         streetaddress: '',
         postcode: '',
         city: ''
-    })
+    });
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -34,6 +34,15 @@ export default function AddCustomer(props) {
     const addCustomer = () => {
         props.saveCustomer(customer);
         handleClose();
+        setCustomer({
+            firstname: '',
+            lastname: '',
+            phone: '',
+            email: '',
+            streetaddress: '',
+            postcode: '',
+            city: ''
+        });
     };
 
     return (
